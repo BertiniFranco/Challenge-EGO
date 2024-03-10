@@ -2,7 +2,7 @@ from django.contrib import admin
 from ego_app import models
 
 
-admin.site.register(models.Marca)
+admin.site.register(models.Modelo)
 admin.site.register(models.Categoria)
 admin.site.register(models.Caracteristica)
 admin.site.register(models.Auto)

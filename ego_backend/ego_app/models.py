@@ -1,18 +1,6 @@
 from django.db import models
 
 
-class Marca(models.Model):
-    id = models.AutoField(primary_key=True, db_column='id', blank=False, null=False)
-    marca = models.CharField(max_length=50, db_column='marca', blank=False, null=False)
-
-    def __str__(self):
-        return self.marca
-
-    class Meta:
-        managed = False
-        db_table = 'marca'
-
-
 class Categoria(models.Model):
     id = models.AutoField(primary_key=True, db_column='id', blank=False, null=False)
     categoria = models.CharField(max_length=50, db_column='categoria', blank=False, null=False)
@@ -23,6 +11,19 @@ class Categoria(models.Model):
     class Meta:
         managed = False
         db_table = 'categoria'
+
+
+class Modelo(models.Model):
+    id = models.AutoField(primary_key=True, db_column='id', blank=False, null=False)
+    modelo = models.CharField(max_length=50, db_column='modelo', blank=False, null=False)
+    categoria = models.ForeignKey(Categoria, models.RESTRICT, db_column='categoria_id', blank=False, null=False)
+
+    def __str__(self):
+        return self.modelo
+
+    class Meta:
+        managed = False
+        db_table = 'modelo'
 
 
 class Caracteristica(models.Model):
@@ -40,16 +41,14 @@ class Caracteristica(models.Model):
 
 class Auto(models.Model):
     id = models.AutoField(primary_key=True, db_column='id', blank=False, null=False)
-    marca = models.ForeignKey(Marca, models.RESTRICT, max_length=50, db_column='marca_id', blank=False, null=False)
-    modelo = models.CharField(max_length=50, db_column='modelo', blank=False, null=False)
+    modelo = models.ForeignKey(Modelo, models.RESTRICT, max_length=50, db_column='modelo_id', blank=False, null=False)
     anio = models.IntegerField(verbose_name='Año', db_column='año', blank=False, null=False)
     precio = models.DecimalField(max_digits=10, decimal_places=0, db_column='precio', blank=False, null=False)
-    categoria = models.ForeignKey(Categoria, models.RESTRICT, db_column='categoria_id', blank=False, null=False)
     caracteristicas = models.ManyToManyField(Caracteristica, through='AutoCaracteristica',
                                              through_fields=('auto', 'caracteristica'))
 
     def __str__(self):
-        return self.marca.marca + '-' + self.modelo + '-' + str(self.anio)
+        return self.modelo.modelo + '-' + self.modelo + '-' + str(self.anio)
 
     class Meta:
         managed = False

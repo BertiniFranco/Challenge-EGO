@@ -1,13 +1,11 @@
 from rest_framework.serializers import ModelSerializer, PrimaryKeyRelatedField
 from ego_app.models import Auto, Caracteristica
-from ..marca.marca_serializers import MarcaSerializer
-from ..categoria.categoria_serializers import CategoriaSerializer
+from ..modelo.modelo_serializers import ModeloListRetrieveSerializer
 from ..caracteristica.caracteristica_serializers import CaracteristicaSerializer
 
 
 class AutoListRetrieveSerializer(ModelSerializer):
-    marca = MarcaSerializer()
-    categoria = CategoriaSerializer()
+    modelo = ModeloListRetrieveSerializer()
     caracteristicas = CaracteristicaSerializer(many=True)
 
     class Meta:
