@@ -18,7 +18,7 @@ const CategoriaManagement = () => {
         setCreateInputValue(e.target.value);
     }
 
-    const onEditInputValue = (e, id) => {
+    const onEditInputChange = (e, id) => {
         const list = categoriaList;
         const index = list.findIndex(x => x.id === id);
         list[index] = {
@@ -83,7 +83,7 @@ const CategoriaManagement = () => {
                                 type='text'
                                 maxLength={50}
                                 value={categoria.categoria}
-                                onChange={(e) => onEditInputValue(e, categoria.id)}
+                                onChange={(e) => onEditInputChange(e, categoria.id)}
                             />
                             <div className='options'>
                                 <button className='options-button' onClick={(e) => onEditClick(e, categoria.id)}>Editar</button>

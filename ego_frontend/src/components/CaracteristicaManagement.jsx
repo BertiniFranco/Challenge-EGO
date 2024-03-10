@@ -23,7 +23,7 @@ const CaracteristicaManagement = () => {
         setDescripcionCreateInputValue(e.target.value);
     }
 
-    const onCaracteristicaEditInputValue = (e, id) => {
+    const onCaracteristicaEditInputChange = (e, id) => {
         const list = caracteristicaList;
         const index = list.findIndex(x => x.id === id);
         list[index] = {
@@ -34,7 +34,7 @@ const CaracteristicaManagement = () => {
         setCaracteristicaList([...list]);
     }
 
-    const onDescripcionEditInputValue = (e, id) => {
+    const onDescripcionEditInputChange = (e, id) => {
         const list = caracteristicaList;
         const index = list.findIndex(x => x.id === id);
         list[index] = {
@@ -120,13 +120,13 @@ const CaracteristicaManagement = () => {
                                     type='text'
                                     maxLength={50}
                                     value={caracteristica.caracteristica}
-                                    onChange={(e) => onCaracteristicaEditInputValue(e, caracteristica.id)}
+                                    onChange={(e) => onCaracteristicaEditInputChange(e, caracteristica.id)}
                                 />
                                 <textarea
                                     className='management-list-item-input caracteristica'
                                     maxLength={255}
                                     value={caracteristica.descripcion}
-                                    onChange={(e) => onDescripcionEditInputValue(e, caracteristica.id)}
+                                    onChange={(e) => onDescripcionEditInputChange(e, caracteristica.id)}
                                 />
                             </div>
                             <div className='caracteristica-options'>

@@ -18,7 +18,7 @@ const MarcaManagement = () => {
         setCreateInputValue(e.target.value);
     }
 
-    const onEditInputValue = (e, id) => {
+    const onEditInputChange = (e, id) => {
         const list = marcaList;
         const index = list.findIndex(x => x.id === id);
         list[index] = {
@@ -83,7 +83,7 @@ const MarcaManagement = () => {
                                 type='text'
                                 maxLength={50}
                                 value={marca.marca}
-                                onChange={(e) => onEditInputValue(e, marca.id)}
+                                onChange={(e) => onEditInputChange(e, marca.id)}
                             />
                             <div className='options'>
                                 <button className='options-button' onClick={(e) => onEditClick(e, marca.id)}>Editar</button>
