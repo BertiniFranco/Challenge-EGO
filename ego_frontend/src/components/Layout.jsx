@@ -8,9 +8,6 @@ const Layout = ({children}) => {
             <header className='header'>
                 <nav className='navbar'>
                     <NavLink to={'/'} className='navbar-link'>
-                        Inicio
-                    </NavLink>
-                    <NavLink to={'/auto'} className='navbar-link'>
                         Auto
                     </NavLink>
                     <NavLink to={'/caracteristica'} className='navbar-link'>
