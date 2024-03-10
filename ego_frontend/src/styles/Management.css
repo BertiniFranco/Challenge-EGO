@@ -1,0 +1,144 @@
+.management {
+  width: 100%;
+  margin-top: 50px;
+  align-self: center;
+  padding: 20px;
+  border: solid 2px #000;
+}
+
+.management-title {
+  padding-bottom: 10px;
+  border-bottom: solid 2px #000;
+}
+
+.management-form {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.form-input {
+  width: 80%;
+  margin-right: 10px;
+  padding: 5px;
+}
+
+.form-button {
+  width: 20% !important;
+}
+
+.grid {
+  width: 100%;
+}
+
+.management-list {
+  width: 100%;
+  height: 100%;
+  margin-top: 15px;
+  margin-left: 0;
+  padding: 0;
+  display: block;
+}
+
+.management-list-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+  margin: 4px 0;
+}
+
+.management-list-item-input {
+  width: 60%;
+  background-color: transparent;
+  border: none;
+  color: #000;
+  border-bottom: solid 1px #000;
+  font-weight: bold;
+}
+
+.management-list-item-input:focus {
+  outline: none;
+}
+
+.options {
+  width: 40%;
+  display: flex;
+  align-items: flex-end;
+}
+
+.options-button {
+  width: 50%;
+  margin-left: 5px;
+  border: solid 1px #000;
+  color: #000;
+  background-color: transparent;
+}
+
+.options-button:hover {
+  background-color: #000;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* Estilos para CaracteristicaManagement en particular. */
+
+textarea {
+  height: 50px;
+  margin-top: 5px;
+  resize: none;
+}
+
+.input-container {
+  width: 80%;
+}
+
+.button-container {
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.caracteristica-form-button {
+  width: 100%;
+  border: solid 1px #000;
+  color: #000;
+  background-color: transparent;
+}
+
+.caracteristica-form-button:hover {
+  background-color: #000;
+  color: #fff;
+  cursor: pointer;
+}
+
+.management-list-item-container {
+  width: 80%;
+}
+
+.management-list-item-input {
+  &.caracteristica {
+    width: 80%;
+  }
+}
+
+.caracteristica-options {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 20%;
+}
+
+.caracteristica-options-button {
+  width: 100%;
+  border: solid 1px #000;
+  color: #000;
+  background-color: transparent;
+}
+
+.caracteristica-options-button:hover {
+  background-color: #000;
+  color: #fff;
+  cursor: pointer;
+}
