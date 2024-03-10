@@ -108,7 +108,7 @@ const CaracteristicaManagement = () => {
                         onChange={onDescripcionCreateInputChange}
                     />
                 </div>
-                <div className='button-container'><button className='caracteristica-form-button' type='submit'>Agregar</button></div>
+                <div className='button-container'><button className='multi-form-button' type='submit'>Agregar</button></div>
             </form>
             <div className='grid'>
                 <ul className='management-list'>
@@ -116,14 +116,14 @@ const CaracteristicaManagement = () => {
                         <li key={caracteristica.id} className='management-list-item'>
                             <div className='management-list-item-container'>
                                 <input
-                                    className='management-list-item-input caracteristica'
+                                    className='management-list-item-input multi'
                                     type='text'
                                     maxLength={50}
                                     value={caracteristica.caracteristica}
                                     onChange={(e) => onCaracteristicaEditInputChange(e, caracteristica.id)}
                                 />
                                 <textarea
-                                    className='management-list-item-input caracteristica'
+                                    className='management-list-item-input multi'
                                     maxLength={255}
                                     value={caracteristica.descripcion}
                                     onChange={(e) => onDescripcionEditInputChange(e, caracteristica.id)}
