@@ -45,7 +45,7 @@ class Auto(models.Model):
     anio = models.IntegerField(verbose_name='Año', db_column='año', blank=False, null=False)
     precio = models.DecimalField(max_digits=10, decimal_places=0, db_column='precio', blank=False, null=False)
     categoria = models.ForeignKey(Categoria, models.RESTRICT, db_column='categoria_id', blank=False, null=False)
-    caracteristicas = models.ManyToManyField(Caracteristica, blank=True, through='AutoCaracteristica',
+    caracteristicas = models.ManyToManyField(Caracteristica, through='AutoCaracteristica',
                                              through_fields=('auto', 'caracteristica'))
 
     def __str__(self):
@@ -60,7 +60,7 @@ class AutoCaracteristica(models.Model):
     # Django no permite la utilización de claves compuestas por lo que se establece 'primary_key=True' en
     # un solo campo. Para compensar esta limitación, se utiliza 'unique_together'.
 
-    auto = models.ForeignKey(Auto, models.RESTRICT, primary_key=True, db_column='auto_id', blank=False, null=False)
+    auto = models.ForeignKey(Auto, models.CASCADE, primary_key=True, db_column='auto_id', blank=False, null=False)
     caracteristica = models.ForeignKey(Caracteristica, models.RESTRICT, db_column='caracteristica_id',
                                        blank=False, null=False)
 
