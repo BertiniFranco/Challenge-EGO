@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-f)#c#@+mh-!9e#tpjm=s(3aqwqa*!sw)$^b3o-iox*3_vkm6z4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -45,6 +45,7 @@ MY_APPS = [
 
 THIRD_APPS = [
     'rest_framework',
+    'corsheaders'
 ]
 
 INSTALLED_APPS = BASE_APPS + MY_APPS + THIRD_APPS
@@ -52,6 +53,7 @@ INSTALLED_APPS = BASE_APPS + MY_APPS + THIRD_APPS
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -136,3 +138,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ALLOW_CREDENTIALS = True
