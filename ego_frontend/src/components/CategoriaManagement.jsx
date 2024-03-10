@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import CategoriaDataAccess from '../DataAccess/CategoriaDataAccess';
+import CategoriaDataAccess from '../dataAccess/CategoriaDataAccess';
 import '../styles/Management.css';
 
 

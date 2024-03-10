@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import MarcaDataAccess from '../DataAccess/MarcaDataAccess';
+import MarcaDataAccess from '../dataAccess/MarcaDataAccess';
 import '../styles/Management.css';
 
 

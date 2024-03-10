@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import CaracteristicaDataAccess from '../DataAccess/CaracteristicaDataAccess';
+import CaracteristicaDataAccess from '../dataAccess/CaracteristicaDataAccess';
 import '../styles/Management.css';
 
 
