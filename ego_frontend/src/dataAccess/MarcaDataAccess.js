@@ -1,10 +1,6 @@
 import DataAccess from "./DataAccess";
 
 class MarcaDataAccess extends DataAccess {
-    constructor() {
-        super();
-    }
-
     async list() {
         await this._get('marca/');
     }

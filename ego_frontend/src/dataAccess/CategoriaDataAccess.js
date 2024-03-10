@@ -1,10 +1,6 @@
 import DataAccess from "./DataAccess";
 
 class CategoriaDataAccess extends DataAccess {
-    constructor() {
-        super();
-    }
-
     async list() {
         await this._get('categoria/');
     }
