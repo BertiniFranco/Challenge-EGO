@@ -140,24 +140,27 @@ const AutoManagement = () => {
         <div className='management'>
             <h1 className='management-title'>Administración de autos</h1>
             <form className='management-form' onSubmit={onFormSubmit}>
-                <div>
+                <div className='management-form-input-container'>
+                    <label className='label'>Modelo</label>
                     <Select
-                        className='form-input select inside-container'
+                        className='form-input'
                         placeholder='Seleccione el modelo...'
                         value={createData.modelo}
                         onChange={(option) => onInputChange(option, 'modelo')}
                         options={modeloOptions}
                     />
+                    <label className='label'>Año</label>
                     <input
-                        className='form-input inside-container number'
+                        className='form-input number'
                         type='number'
                         placeholder='Ingrese el año...'
                         required
                         value={createData.anio}
                         onChange={(e) => onInputChange(e, 'anio')}
                     />
+                    <label className='label'>Precio</label>
                     <input
-                        className='form-input inside-container number'
+                        className='form-input number'
                         type='number'
                         placeholder='Ingrese el precio...'
                         maxLength={15}
@@ -165,8 +168,9 @@ const AutoManagement = () => {
                         value={createData.precio}
                         onChange={(e) => onInputChange(e, 'precio')}
                     />
+                    <label className='label'>Características</label>
                     <Select
-                        className='form-input select inside-container'
+                        className='form-input'
                         placeholder='Seleccione las características...'
                         value={createData.caracteristicas}
                         onChange={(options) => onInputChange(options, 'caracteristicas')}
@@ -174,62 +178,66 @@ const AutoManagement = () => {
                         isMulti
                     />
                 </div>
-                <div className='button-container'><button className='multi-form-button' type='submit'>Agregar</button></div>
+                <div className='button-container'>
+                    <button className='button' type='submit'>Agregar</button>
+                </div>
             </form>
-            <div className='grid'>
-                <ul className='management-list'>
-                    {autoList.map((auto) => (
-                        <li key={auto.id} className='management-list-item'>
-                            <div className='management-list-item-container'>
-                                <Select
-                                    className='management-list-item-input auto select'
-                                    placeholder='Seleccione la marca...'
-                                    value={{value: auto.modelo.id, label: auto.modelo.modelo}}
-                                    onChange={(option) => onEditInputChange(option, auto.id, 'modelo')}
-                                    options={modeloOptions}
-                                />
-                                <input
-                                    className='management-list-item-input number auto'
-                                    type='number'
-                                    placeholder='Ingrese el año...'
-                                    required
-                                    value={auto.anio}
-                                    onChange={(e) => onEditInputChange(e, auto.id, 'anio')}
-                                />
-                                <input
-                                    className='management-list-item-input number auto'
-                                    type='number'
-                                    placeholder='Ingrese el precio...'
-                                    maxLength={15}
-                                    required
-                                    value={auto.precio}
-                                    onChange={(e) => onEditInputChange(e, auto.id, 'precio')}
-                                />
-                                <Select
-                                    className='management-list-item-input auto select'
-                                    placeholder='Seleccione las características...'
-                                    value={auto.caracteristicas.map(x => {
-                                        return({
-                                            value: x.id,
-                                            label: x.caracteristica
-                                        });
-                                    })}
-                                    onChange={(options) => onEditInputChange(options, auto.id, 'caracteristicas')}
-                                    options={caracteristicaOptions}
-                                    isMulti
-                                />
-                            </div>
-                            <div className='caracteristica-options'>
-                                <button className='caracteristica-options-button'
-                                        onClick={(e) => onEditClick(e, auto.id)}>Editar
-                                </button>
-                                <button className='caracteristica-options-button'
-                                        onClick={(e) => onDeleteClick(e, auto.id)}>Eliminar
-                                </button>
-                            </div>
-                        </li>
-                    ))}
-                </ul>
+            <div className='management-list'>
+                {autoList.map((auto) => (
+                    <div key={auto.id} className='management-list-item'>
+                        <div className='management-list-item-container'>
+                            <label className='label'>Modelo</label>
+                            <Select
+                                className='management-list-item-input'
+                                placeholder='Seleccione el modelo...'
+                                value={{value: auto.modelo.id, label: auto.modelo.modelo}}
+                                onChange={(option) => onEditInputChange(option, auto.id, 'modelo')}
+                                options={modeloOptions}
+                            />
+                            <label className='label'>Año</label>
+                            <input
+                                className='management-list-item-input number'
+                                type='number'
+                                placeholder='Ingrese el año...'
+                                required
+                                value={auto.anio}
+                                onChange={(e) => onEditInputChange(e, auto.id, 'anio')}
+                            />
+                            <label className='label'>Precio</label>
+                            <input
+                                className='management-list-item-input number'
+                                type='number'
+                                placeholder='Ingrese el precio...'
+                                maxLength={15}
+                                required
+                                value={auto.precio}
+                                onChange={(e) => onEditInputChange(e, auto.id, 'precio')}
+                            />
+                            <label className='label'>Características</label>
+                            <Select
+                                className='management-list-item-input'
+                                placeholder='Seleccione las características...'
+                                value={auto.caracteristicas.map(x => {
+                                    return ({
+                                        value: x.id,
+                                        label: x.caracteristica
+                                    });
+                                })}
+                                onChange={(options) => onEditInputChange(options, auto.id, 'caracteristicas')}
+                                options={caracteristicaOptions}
+                                isMulti
+                            />
+                        </div>
+                        <div className='management-list-options'>
+                            <button className='management-list-options-button button'
+                                    onClick={(e) => onEditClick(e, auto.id)}>Editar
+                            </button>
+                            <button className='management-list-options-button button'
+                                    onClick={(e) => onDeleteClick(e, auto.id)}>Eliminar
+                            </button>
+                        </div>
+                    </div>
+                ))}
             </div>
         </div>
     );

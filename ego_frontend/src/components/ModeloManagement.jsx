@@ -118,35 +118,43 @@ const ModeloManagement = () => {
         <div className='management'>
             <h1 className='management-title'>Administración de modelos</h1>
             <form className='management-form' onSubmit={onFormSubmit}>
-                <Select
-                    className='form-input select inside-container'
-                    placeholder='Seleccione la categoría...'
-                    value={categoriaInputValue}
-                    onChange={(option) => onCategoriaInputChange(option)}
-                    options={categoriaOptions}
-                />
-                <input
-                    className='form-input'
-                    type='text'
-                    placeholder='Ingrese un modelo...'
-                    maxLength={50}
-                    required
-                    value={modeloInputValue}
-                    onChange={onModeloInputChange}
-                />
-                <button className='form-button options-button' type='submit'>Agregar</button>
+                <div className='management-form-input-container'>
+                    <label className='label'>Categoría</label>
+                    <Select
+                        className='form-input'
+                        placeholder='Seleccione la categoría...'
+                        value={categoriaInputValue}
+                        onChange={(option) => onCategoriaInputChange(option)}
+                        options={categoriaOptions}
+                    />
+                    <label className='label'>Modelo</label>
+                    <input
+                        className='form-input'
+                        type='text'
+                        placeholder='Ingrese un modelo...'
+                        maxLength={50}
+                        required
+                        value={modeloInputValue}
+                        onChange={onModeloInputChange}
+                    />
+                </div>
+                <div className='button-container'>
+                    <button className='button' type='submit'>Agregar</button>
+                </div>
             </form>
-            <div className='grid'>
-                <ul className='management-list'>
+            <div className='management-list'>
                 {modeloList.map((modelo) => (
-                        <li key={modelo.id} className='management-list-item'>
+                    <div key={modelo.id} className='management-list-item'>
+                        <div className='management-list-item-container'>
+                            <label className='label'>Categoría</label>
                             <Select
-                                className='management-list-item-input auto select'
+                                className='management-list-item-input'
                                 placeholder='Seleccione la categoría...'
                                 value={{value: modelo.categoria.id, label: modelo.categoria.categoria}}
                                 onChange={(option) => onEditCategoriaInputChange(option, modelo.id)}
                                 options={categoriaOptions}
                             />
+                            <label className='label'>Modelo</label>
                             <input
                                 className='management-list-item-input'
                                 type='text'
@@ -154,14 +162,14 @@ const ModeloManagement = () => {
                                 value={modelo.modelo}
                                 onChange={(e) => onEditModeloInputChange(e, modelo.id)}
                             />
-                            <div className='options'>
-                                <button className='options-button' onClick={(e) => onEditClick(e, modelo.id)}>Editar</button>
-                                <button className='options-button' onClick={(e) => onDeleteClick(e, modelo.id)}>Eliminar</button>
-                            </div>
-                        </li>
+                        </div>
+                        <div className='management-list-options'>
+                            <button className='management-list-options-button button' onClick={(e) => onEditClick(e, modelo.id)}>Editar</button>
+                            <button className='management-list-options-button button' onClick={(e) => onDeleteClick(e, modelo.id)}>Eliminar</button>
+                        </div>
+                    </div>
                     ))}
-                </ul>
-            </div>
+                </div>
         </div>
     );
 };

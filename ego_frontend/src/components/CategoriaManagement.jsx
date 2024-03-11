@@ -82,21 +82,27 @@ const CategoriaManagement = () => {
         <div className='management'>
             <h1 className='management-title'>Administración de categorías</h1>
             <form className='management-form' onSubmit={onFormSubmit}>
-                <input
-                    className='form-input'
-                    type='text'
-                    placeholder='Ingrese una categoría...'
-                    maxLength={50}
-                    required
-                    value={createInputValue}
-                    onChange={onCreateInputChange}
-                />
-                <button className='form-button options-button' type='submit'>Agregar</button>
+                <div className='management-form-input-container'>
+                    <label className='label'>Categoría</label>
+                    <input
+                        className='form-input'
+                        type='text'
+                        placeholder='Ingrese una categoría...'
+                        maxLength={50}
+                        required
+                        value={createInputValue}
+                        onChange={onCreateInputChange}
+                    />
+                    <div className='button-container'>
+                        <button className='button' type='submit'>Agregar</button>
+                    </div>
+                </div>
             </form>
-            <div className='grid'>
-                <ul className='management-list'>
-                    {categoriaList.map((categoria) => (
-                        <li key={categoria.id} className='management-list-item'>
+            <div className='management-list'>
+                {categoriaList.map((categoria) => (
+                    <div key={categoria.id} className='management-list-item'>
+                        <div className='management-list-item-container'>
+                            <label className='label'>Categoría</label>
                             <input
                                 className='management-list-item-input'
                                 type='text'
@@ -104,13 +110,13 @@ const CategoriaManagement = () => {
                                 value={categoria.categoria}
                                 onChange={(e) => onEditInputChange(e, categoria.id)}
                             />
-                            <div className='options'>
-                                <button className='options-button' onClick={(e) => onEditClick(e, categoria.id)}>Editar</button>
-                                <button className='options-button' onClick={(e) => onDeleteClick(e, categoria.id)}>Eliminar</button>
-                            </div>
-                        </li>
-                    ))}
-                </ul>
+                        </div>
+                        <div className='management-list-options'>
+                            <button className='management-list-options-button button' onClick={(e) => onEditClick(e, categoria.id)}>Editar</button>
+                            <button className='management-list-options-button button' onClick={(e) => onDeleteClick(e, categoria.id)}>Eliminar</button>
+                        </div>
+                    </div>
+                ))}
             </div>
         </div>
     );

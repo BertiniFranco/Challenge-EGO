@@ -108,7 +108,8 @@ const CaracteristicaManagement = () => {
         <div className='management'>
             <h1 className='management-title'>Administración de características</h1>
             <form className='management-form' onSubmit={onFormSubmit}>
-                <div className='input-container'>
+                <div className='management-form-input-container'>
+                    <label className='label'>Característica</label>
                     <input
                         className='form-input'
                         type='text'
@@ -118,6 +119,7 @@ const CaracteristicaManagement = () => {
                         value={caracteristicaCreateInputValue}
                         onChange={onCaracteristicaCreateInputChange}
                     />
+                    <label className='label'>Descripción</label>
                     <textarea
                         className='form-input'
                         placeholder='Ingrese una descripción...'
@@ -127,34 +129,36 @@ const CaracteristicaManagement = () => {
                         onChange={onDescripcionCreateInputChange}
                     />
                 </div>
-                <div className='button-container'><button className='multi-form-button' type='submit'>Agregar</button></div>
+                <div className='button-container'>
+                    <button className='button' type='submit'>Agregar</button>
+                </div>
             </form>
-            <div className='grid'>
-                <ul className='management-list'>
-                    {caracteristicaList.map((caracteristica) => (
-                        <li key={caracteristica.id} className='management-list-item'>
-                            <div className='management-list-item-container'>
-                                <input
-                                    className='management-list-item-input multi'
-                                    type='text'
-                                    maxLength={50}
-                                    value={caracteristica.caracteristica}
-                                    onChange={(e) => onCaracteristicaEditInputChange(e, caracteristica.id)}
-                                />
-                                <textarea
-                                    className='management-list-item-input multi'
-                                    maxLength={255}
-                                    value={caracteristica.descripcion}
-                                    onChange={(e) => onDescripcionEditInputChange(e, caracteristica.id)}
-                                />
-                            </div>
-                            <div className='caracteristica-options'>
-                                <button className='caracteristica-options-button' onClick={(e) => onEditClick(e, caracteristica.id)}>Editar</button>
-                                <button className='caracteristica-options-button' onClick={(e) => onDeleteClick(e, caracteristica.id)}>Eliminar</button>
-                            </div>
-                        </li>
-                    ))}
-                </ul>
+            <div className='management-list'>
+                {caracteristicaList.map((caracteristica) => (
+                    <div key={caracteristica.id} className='management-list-item'>
+                        <div className='management-list-item-container'>
+                            <label className='label'>Característica</label>
+                            <input
+                                className='management-list-item-input'
+                                type='text'
+                                maxLength={50}
+                                value={caracteristica.caracteristica}
+                                onChange={(e) => onCaracteristicaEditInputChange(e, caracteristica.id)}
+                            />
+                            <label className='label'>Descripción</label>
+                            <textarea
+                                className='management-list-item-input'
+                                maxLength={255}
+                                value={caracteristica.descripcion}
+                                onChange={(e) => onDescripcionEditInputChange(e, caracteristica.id)}
+                            />
+                        </div>
+                        <div className='management-list-options'>
+                            <button className='management-list-options-button button' onClick={(e) => onEditClick(e, caracteristica.id)}>Editar</button>
+                            <button className='management-list-options-button button' onClick={(e) => onDeleteClick(e, caracteristica.id)}>Eliminar</button>
+                        </div>
+                    </div>
+                ))}
             </div>
         </div>
     );
