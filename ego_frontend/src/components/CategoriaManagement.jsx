@@ -1,14 +1,21 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect} from 'react';
+import {useSnackbar} from 'notistack';
+import Notifier from './Notifier';
 import CategoriaDataAccess from '../dataAccess/CategoriaDataAccess';
 import '../styles/Management.css';
 
 
 const CategoriaManagement = () => {
+    const { enqueueSnackbar} = useSnackbar();
+    const notifier = new Notifier(enqueueSnackbar);
+
     const [categoriaList, setCategoriaList] = useState([]);
 
     const updateList = () => {
         CategoriaDataAccess.list().then(() => {
-            setCategoriaList(CategoriaDataAccess.response.data)
+            if(!CategoriaDataAccess.hasError)
+                setCategoriaList(CategoriaDataAccess.response.data);
+            else notifier.notifyApiError(CategoriaDataAccess);
         });
     }
 
@@ -33,14 +40,21 @@ const CategoriaManagement = () => {
         const categoria = categoriaList[index].categoria;
         if(categoria !== '') {
             CategoriaDataAccess.update(id, {'categoria': categoria}).then(() => {
-                //Marca actualizada con éxito
+                if(!CategoriaDataAccess.hasError)
+                    notifier.notifySuccess('Categoría actualizada con éxito.')
+                else notifier.notifyApiError(CategoriaDataAccess);
             });
         }
+        else notifier.notifyInfo('Complete todos los campos.');
     }
 
     const onDeleteClick = (e, id) => {
         CategoriaDataAccess.delete(id).then(() => {
-            updateList();
+            if(!CategoriaDataAccess.hasError) {
+                updateList();
+                notifier.notifySuccess('Categoría eliminada con éxito.')
+            }
+            else notifier.notifyApiError(CategoriaDataAccess);
         });
     }
 
@@ -49,10 +63,15 @@ const CategoriaManagement = () => {
         const categoria = createInputValue;
         if(categoria !== '') {
             CategoriaDataAccess.create({'categoria': categoria}).then(() => {
-                updateList();
+                if(!CategoriaDataAccess.hasError) {
+                    updateList();
+                    notifier.notifySuccess('Categoría agregada con éxito.')
+                }
+                else notifier.notifyApiError(CategoriaDataAccess);
             });
             setCreateInputValue('');
         }
+        else notifier.notifyInfo('Complete todos los campos.');
     }
 
     useEffect(() => {

@@ -1,14 +1,21 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect} from 'react';
+import {useSnackbar} from 'notistack';
+import Notifier from './Notifier';
 import CaracteristicaDataAccess from '../dataAccess/CaracteristicaDataAccess';
 import '../styles/Management.css';
 
 
 const CaracteristicaManagement = () => {
+    const {enqueueSnackbar} = useSnackbar();
+    const notifier = new Notifier(enqueueSnackbar);
+
     const [caracteristicaList, setCaracteristicaList] = useState([]);
 
     const updateList = () => {
         CaracteristicaDataAccess.list().then(() => {
-            setCaracteristicaList(CaracteristicaDataAccess.response.data)
+            if(!CaracteristicaDataAccess.hasError)
+                setCaracteristicaList(CaracteristicaDataAccess.response.data);
+            else notifier.notifyApiError(CaracteristicaDataAccess);
         });
     }
 
@@ -54,14 +61,21 @@ const CaracteristicaManagement = () => {
                 'caracteristica': caracteristica,
                 'descripcion': descripcion
             }).then(() => {
-                //Marca actualizada con éxito
+                if(!CaracteristicaDataAccess.hasError)
+                    notifier.notifySuccess('Característica actualizada con éxito.');
+                else notifier.notifyApiError(CaracteristicaDataAccess);
             });
         }
+        else notifier.notifyInfo('Complete todos los campos.');
     }
 
     const onDeleteClick = (e, id) => {
         CaracteristicaDataAccess.delete(id).then(() => {
-            updateList();
+            if(!CaracteristicaDataAccess.hasError) {
+                updateList();
+                notifier.notifySuccess('Característica eliminada con éxito.');
+            }
+            else notifier.notifyApiError(CaracteristicaDataAccess);
         });
     }
 
@@ -74,11 +88,16 @@ const CaracteristicaManagement = () => {
                 'caracteristica': caracteristica,
                 'descripcion': descripcion
             }).then(() => {
-                updateList();
+                if(!CaracteristicaDataAccess.hasError) {
+                    updateList();
+                    notifier.notifySuccess('Característica agregada con éxito.');
+                }
+                else notifier.notifyApiError(CaracteristicaDataAccess);
             });
             setCaracteristicaCreateInputValue('');
             setDescripcionCreateInputValue('');
         }
+        else notifier.notifyInfo('Complete todos los campos.');
     }
 
     useEffect(() => {

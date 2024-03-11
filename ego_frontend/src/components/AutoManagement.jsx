@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Select from 'react-select';
+import {useSnackbar} from 'notistack';
+import Notifier from './Notifier';
 import AutoDataAccess from '../dataAccess/AutoDataAccess';
 import ModeloDataAccess from '../dataAccess/ModeloDataAccess';
 import CaracteristicaDataAccess from '../dataAccess/CaracteristicaDataAccess';
@@ -7,11 +9,16 @@ import '../styles/Management.css';
 
 
 const AutoManagement = () => {
+    const {enqueueSnackbar} = useSnackbar();
+    const notifier = new Notifier(enqueueSnackbar);
+
     const [autoList, setAutoList] = useState([]);
 
     const updateList = () => {
         AutoDataAccess.list().then(() => {
-            setAutoList(AutoDataAccess.response.data)
+            if(!AutoDataAccess.hasError)
+                setAutoList(AutoDataAccess.response.data);
+            else notifier.notifyApiError(AutoDataAccess);
         });
     }
 
@@ -19,8 +26,8 @@ const AutoManagement = () => {
     const [caracteristicaOptions, setCaracteristicaOptions] = useState([]);
 
     const defaultData = {
-        anio: undefined,
-        precio: undefined,
+        anio: '',
+        precio: '',
         modelo: null,
         caracteristicas: []
     };
@@ -54,19 +61,28 @@ const AutoManagement = () => {
         const auto = autoList[index];
         const data = {
             ...auto,
-            modelo: auto.modelo.id,
+            anio: Number(auto.anio),
+            precio: Number(auto.precio),
+            modelo: auto.modelo?.id,
             caracteristicas: auto.caracteristicas.map(x => x.id)
         };
-        if(auto.anio !== undefined && auto.precio !== undefined && auto.modelo !== null && auto.caracteristicas.length > 0) {
+        if(auto.anio !== undefined && auto.anio !== '' && auto.precio !== undefined && auto.precio !== '' && auto.modelo !== undefined && auto.caracteristicas.length > 0) {
             AutoDataAccess.update(id, data).then(() => {
-                //Marca actualizada con éxito
+                if(!AutoDataAccess.hasError)
+                   notifier.notifySuccess('Auto actualizado con éxito.');
+                else notifier.notifyApiError(AutoDataAccess);
             });
         }
+        else notifier.notifyInfo('Complete todos los campos.');
     }
 
     const onDeleteClick = (e, id) => {
         AutoDataAccess.delete(id).then(() => {
-            updateList();
+            if(!AutoDataAccess.hasError) {
+                updateList();
+                notifier.notifySuccess('Auto eliminado con éxito.');
+            }
+            else notifier.notifyApiError(AutoDataAccess);
         });
     }
 
@@ -74,37 +90,49 @@ const AutoManagement = () => {
         e.preventDefault();
         const data = {
             ...createData,
-            modelo: createData.modelo.value,
+            anio: Number(createData.anio),
+            precio: Number(createData.precio),
+            modelo: createData.modelo?.value,
             caracteristicas: createData.caracteristicas.map(x => x.value)
         };
-
-        if(createData.anio !== undefined && createData.precio !== undefined && createData.modelo !== null && createData.categoria !== null && createData.caracteristicas.length > 0) {
+        if(createData.anio !== undefined && createData.anio !== '' && createData.precio !== undefined && createData.precio !== '' && createData.modelo !== undefined && createData.categoria !== null && createData.caracteristicas.length > 0) {
             AutoDataAccess.create(data).then(() => {
-                updateList();
+                if(!AutoDataAccess.hasError) {
+                    updateList();
+                    notifier.notifySuccess('Auto agregado con éxito.');
+                }
+                else notifier.notifyApiError(AutoDataAccess);
             });
             setCreateData(defaultData);
         }
+        else notifier.notifyInfo('Complete todos los campos.');
     }
 
     useEffect(() => {
         updateList();
 
         ModeloDataAccess.list().then(() => {
-            setModeloOptions(ModeloDataAccess.response.data.map(x => {
-                return({
-                    value: x.id,
-                    label: x.modelo
-                });
-            }));
+            if(!AutoDataAccess.hasError) {
+                setModeloOptions(ModeloDataAccess.response.data.map(x => {
+                    return({
+                        value: x.id,
+                        label: x.modelo
+                    });
+                }));
+            }
+            else notifier.notifyApiError(AutoDataAccess);
         });
 
         CaracteristicaDataAccess.list().then(() => {
-            setCaracteristicaOptions(CaracteristicaDataAccess.response.data.map(x => {
-                return({
-                    value: x.id,
-                    label: x.caracteristica
-                });
-            }));
+            if(!AutoDataAccess.hasError) {
+                setCaracteristicaOptions(CaracteristicaDataAccess.response.data.map(x => {
+                    return({
+                        value: x.id,
+                        label: x.caracteristica
+                    });
+                }));
+            }
+            else notifier.notifyApiError(AutoDataAccess);
         });
     }, []);
 
