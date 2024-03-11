@@ -6,7 +6,8 @@ class Notifier {
     }
 
     notifyApiError(api) {
-        this._enqueueSnackbar(`${api.error.code}: ${api.error.message}`, {
+        this._enqueueSnackbar(api.error.response.data !== '' ? api.error.response.data :
+            `${api.error.code}: ${api.error.message}`, {
             variant: 'error',
             autoHideDuration: 2000
         });
