@@ -1,11 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import Select from 'react-select';
 import AutoDataAccess from '../dataAccess/AutoDataAccess';
-import MarcaDataAccess from '../dataAccess/MarcaDataAccess';
-import CategoriaDataAccess from '../dataAccess/CategoriaDataAccess';
+import ModeloDataAccess from '../dataAccess/ModeloDataAccess';
 import CaracteristicaDataAccess from '../dataAccess/CaracteristicaDataAccess';
 import '../styles/Management.css';
-import autoDataAccess from "../dataAccess/AutoDataAccess";
 
 
 const AutoManagement = () => {
@@ -17,16 +15,13 @@ const AutoManagement = () => {
         });
     }
 
-    const [marcaOptions, setMarcaOptions] = useState([]);
-    const [categoriaOptions, setCategoriaOptions] = useState([]);
+    const [modeloOptions, setModeloOptions] = useState([]);
     const [caracteristicaOptions, setCaracteristicaOptions] = useState([]);
 
     const defaultData = {
-        modelo: '',
-        anio: 0,
-        precio: 0,
-        marca: null,
-        categoria: null,
+        anio: undefined,
+        precio: undefined,
+        modelo: null,
         caracteristicas: []
     };
 
@@ -59,11 +54,10 @@ const AutoManagement = () => {
         const auto = autoList[index];
         const data = {
             ...auto,
-            marca: auto.marca.id,
-            categoria: auto.categoria.id,
+            modelo: auto.modelo.id,
             caracteristicas: auto.caracteristicas.map(x => x.id)
         };
-        if(auto.modelo !== '' && auto.anio !== 0 && auto.precio !== 0 && auto.marca !== null && auto.categoria !== null && auto.caracteristicas.length > 0) {
+        if(auto.anio !== undefined && auto.precio !== undefined && auto.modelo !== null && auto.caracteristicas.length > 0) {
             AutoDataAccess.update(id, data).then(() => {
                 //Marca actualizada con éxito
             });
@@ -80,12 +74,11 @@ const AutoManagement = () => {
         e.preventDefault();
         const data = {
             ...createData,
-            marca: createData.marca.value,
-            categoria: createData.categoria.value,
+            modelo: createData.modelo.value,
             caracteristicas: createData.caracteristicas.map(x => x.value)
         };
 
-        if(createData.modelo !== '' && createData.anio !== 0 && createData.precio !== 0 && createData.marca !== null && createData.categoria !== null && createData.caracteristicas.length > 0) {
+        if(createData.anio !== undefined && createData.precio !== undefined && createData.modelo !== null && createData.categoria !== null && createData.caracteristicas.length > 0) {
             AutoDataAccess.create(data).then(() => {
                 updateList();
             });
@@ -96,20 +89,11 @@ const AutoManagement = () => {
     useEffect(() => {
         updateList();
 
-        MarcaDataAccess.list().then(() => {
-            setMarcaOptions(MarcaDataAccess.response.data.map(x => {
+        ModeloDataAccess.list().then(() => {
+            setModeloOptions(ModeloDataAccess.response.data.map(x => {
                 return({
                     value: x.id,
-                    label: x.marca
-                });
-            }));
-        });
-
-        CategoriaDataAccess.list().then(() => {
-            setCategoriaOptions(CategoriaDataAccess.response.data.map(x => {
-                return({
-                    value: x.id,
-                    label: x.categoria
+                    label: x.modelo
                 });
             }));
         });
@@ -129,14 +113,12 @@ const AutoManagement = () => {
             <h1 className='management-title'>Administración de autos</h1>
             <form className='management-form' onSubmit={onFormSubmit}>
                 <div>
-                    <input
-                        className='form-input inside-container'
-                        type='text'
-                        placeholder='Ingrese el nombre del modelo...'
-                        maxLength={50}
-                        required
+                    <Select
+                        className='form-input select inside-container'
+                        placeholder='Seleccione el modelo...'
                         value={createData.modelo}
-                        onChange={(e) => onInputChange(e, 'modelo')}
+                        onChange={(option) => onInputChange(option, 'modelo')}
+                        options={modeloOptions}
                     />
                     <input
                         className='form-input inside-container number'
@@ -157,20 +139,6 @@ const AutoManagement = () => {
                     />
                     <Select
                         className='form-input select inside-container'
-                        placeholder='Seleccione la marca...'
-                        value={createData.marca}
-                        onChange={(option) => onInputChange(option, 'marca')}
-                        options={marcaOptions}
-                    />
-                    <Select
-                        className='form-input select inside-container'
-                        placeholder='Seleccione la categoría...'
-                        value={createData.categoria}
-                        onChange={(option) => onInputChange(option, 'categoria')}
-                        options={categoriaOptions}
-                    />
-                    <Select
-                        className='form-input select inside-container'
                         placeholder='Seleccione las características...'
                         value={createData.caracteristicas}
                         onChange={(options) => onInputChange(options, 'caracteristicas')}
@@ -185,14 +153,12 @@ const AutoManagement = () => {
                     {autoList.map((auto) => (
                         <li key={auto.id} className='management-list-item'>
                             <div className='management-list-item-container'>
-                                <input
-                                    className='management-list-item-input auto'
-                                    type='text'
-                                    placeholder='Ingrese el nombre del modelo...'
-                                    maxLength={50}
-                                    required
-                                    value={auto.modelo}
-                                    onChange={(e) => onEditInputChange(e, auto.id,'modelo')}
+                                <Select
+                                    className='management-list-item-input auto select'
+                                    placeholder='Seleccione la marca...'
+                                    value={{value: auto.modelo.id, label: auto.modelo.modelo}}
+                                    onChange={(option) => onEditInputChange(option, auto.id, 'modelo')}
+                                    options={modeloOptions}
                                 />
                                 <input
                                     className='management-list-item-input number auto'
@@ -210,20 +176,6 @@ const AutoManagement = () => {
                                     required
                                     value={auto.precio}
                                     onChange={(e) => onEditInputChange(e, auto.id, 'precio')}
-                                />
-                                <Select
-                                    className='management-list-item-input auto select'
-                                    placeholder='Seleccione la marca...'
-                                    value={{value: auto.marca.id, label: auto.marca.marca}}
-                                    onChange={(option) => onEditInputChange(option, auto.id, 'marca')}
-                                    options={marcaOptions}
-                                />
-                                <Select
-                                    className='management-list-item-input auto select'
-                                    placeholder='Seleccione la categoría...'
-                                    value={{value: auto.categoria.id, label: auto.categoria.categoria}}
-                                    onChange={(option) => onEditInputChange(option, auto.id, 'categoria')}
-                                    options={categoriaOptions}
                                 />
                                 <Select
                                     className='management-list-item-input auto select'

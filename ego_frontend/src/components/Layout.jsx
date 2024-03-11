@@ -16,8 +16,8 @@ const Layout = ({children}) => {
                     <NavLink to={'/categoria'} className='navbar-link'>
                         Categoría
                     </NavLink>
-                    <NavLink to={'/marca'} className='navbar-link'>
-                        Marca
+                    <NavLink to={'/modelo'} className='navbar-link'>
+                        Modelo
                     </NavLink>
                 </nav>
             </header>
