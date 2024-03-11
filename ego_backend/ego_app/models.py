@@ -48,7 +48,7 @@ class Auto(models.Model):
                                              through_fields=('auto', 'caracteristica'))
 
     def __str__(self):
-        return self.modelo.modelo + '-' + self.modelo + '-' + str(self.anio)
+        return self.modelo.modelo + '-' + str(self.anio)
 
     class Meta:
         managed = False
