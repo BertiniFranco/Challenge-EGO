@@ -91,7 +91,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'backend_challenge_ego',
         'USER': 'root',
-        'PASSWORD': '1234',
+        'PASSWORD': 'YOUR_PASSWORD',
         'HOST': 'localhost',
         'PORT': '3306'
     }
